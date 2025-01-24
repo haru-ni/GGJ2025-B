@@ -16,12 +16,9 @@ namespace GGJ2025.InGame
             _state = new PlayerState(transform);
             _usecase = new PlayerUsecase(_state);
             _inputProvider = GetComponent<PlayerInputProvider>();
-            
-
-            
         }
         
-        private void Start()
+        public void OnStart()
         {
             _inputProvider.HorizontalButtonHold
                 .Where(x => x != 0)
@@ -29,12 +26,6 @@ namespace GGJ2025.InGame
             _inputProvider.VerticalButtonHold
                 .Where(x => x != 0)
                 .Subscribe(_usecase.MoveVertical).AddTo(this);
-            Debug.Log("Player Start");
-            OnStart();
-        }
-        
-        public void OnStart()
-        {
             this.UpdateAsObservable()
                 .Subscribe(_ => _usecase.UpdateMove(Time.deltaTime)).AddTo(this);
             StartInput();
@@ -44,13 +35,17 @@ namespace GGJ2025.InGame
         public void StartInput()
         {
             _inputProvider.StartInput();
-            
         }
         
         /** 入力停止 */
         public void StopInput()
         {
             _inputProvider.StopInput();
+        }
+        
+        public PlayerState GetState()
+        {
+            return _state;
         }
     }
 }
