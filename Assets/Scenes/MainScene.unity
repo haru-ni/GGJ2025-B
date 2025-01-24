@@ -1200,6 +1200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256cb9335e2a44bb94b979c9383d93f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  master: {fileID: 11400000, guid: 8afe5f3c5deea4ff488666c43d83116b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

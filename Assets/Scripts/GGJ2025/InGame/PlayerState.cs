@@ -1,3 +1,4 @@
+using GGJ2025.Master;
 using UniRx;
 using UnityEngine;
 
@@ -16,19 +17,18 @@ namespace GGJ2025.InGame
         public Vector2 Speed { get; private set; }
         /** 位置 */
         public readonly Transform Transform;
+        /** マスター */
+        public PlayerMaster Master { get; private set; }
 
         public IReadOnlyReactiveProperty<int> SizeRP => _size;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
         
-        /** 基本速度 */
-        public readonly float BaseSpeed = 300f;
-        /** 速度減衰率 */
-        public readonly float DampingRate = 0.02f;
         /** 速度下限 */
         public readonly float MinSpeed = 10f;
 
-        public PlayerState(Transform transform)
+        public PlayerState(PlayerMaster master, Transform transform)
         {
+            Master = master;
             Transform = transform;
             Size = new Vector2(80, 80);
         }

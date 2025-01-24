@@ -15,14 +15,14 @@ namespace GGJ2025.InGame
         /** 左右入力 */
         public void MoveHorizontal(float x)
         {
-            var speedX = x * _state.BaseSpeed;
+            var speedX = x * _state.Master.BaseSpeed;
             _state.SetHorizontalSpeed(speedX);
         }
         
         /** 上下入力 */
         public void MoveVertical(float y)
         {
-            var speedY = y * _state.BaseSpeed;
+            var speedY = y * _state.Master.BaseSpeed;
             _state.SetVerticalSpeed(speedY);
         }
 
@@ -32,10 +32,10 @@ namespace GGJ2025.InGame
             // 速度減衰
             var nextSpeedX = Mathf.Abs(_state.Speed.x) < _state.MinSpeed
                 ? 0
-                : Mathf.Lerp(_state.Speed.x, 0, _state.DampingRate);
+                : Mathf.Lerp(_state.Speed.x, 0, _state.Master.DampingRate);
             var nextSpeedY = Mathf.Abs(_state.Speed.y) < _state.MinSpeed
                 ? 0
-                : Mathf.Lerp(_state.Speed.y, 0, _state.DampingRate);
+                : Mathf.Lerp(_state.Speed.y, 0, _state.Master.DampingRate);
             _state.SetHorizontalSpeed(nextSpeedX);
             _state.SetVerticalSpeed(nextSpeedY);
             
