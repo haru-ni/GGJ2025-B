@@ -32,16 +32,19 @@ namespace GGJ2025.InGame
             // 速度減衰
             var nextSpeedX = Mathf.Abs(_state.Speed.x) < _state.MinSpeed
                 ? 0
-                : _state.Speed.x * Mathf.Pow(_state.DampingRate, deltaTime);
+                : Mathf.Lerp(_state.Speed.x, 0, _state.DampingRate);
             var nextSpeedY = Mathf.Abs(_state.Speed.y) < _state.MinSpeed
                 ? 0
-                : _state.Speed.y * Mathf.Pow(_state.DampingRate, deltaTime);
+                : Mathf.Lerp(_state.Speed.y, 0, _state.DampingRate);
             _state.SetHorizontalSpeed(nextSpeedX);
             _state.SetVerticalSpeed(nextSpeedY);
             
             // 移動
             var currentPos = _state.Transform.localPosition;
-            var nextPos = new Vector2(currentPos.x + _state.Speed.x * deltaTime, currentPos.y + _state.Speed.y * deltaTime);
+            var nextPosX = Mathf.Clamp(currentPos.x + _state.Speed.x * deltaTime, -GameConst.StageWidth / 2 + _state.Size.x / 2, GameConst.StageWidth / 2 - _state.Size.x / 2);
+            var nextPosY = Mathf.Clamp(currentPos.y + _state.Speed.y * deltaTime, -GameConst.StageHeight / 2 + _state.Size.y / 2, GameConst.StageHeight / 2 - _state.Size.y / 2);
+            var nextPos = new Vector2(nextPosX, nextPosY);
+            
             _state.Move(nextPos);
             
         }
