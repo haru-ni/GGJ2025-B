@@ -8,6 +8,7 @@ namespace GGJ2025.InGame
     public class StageView: MonoBehaviour
     {
         [SerializeField] private StageMaster master;
+        [SerializeField] private BackgroundView backgroundView;
         
         private StageUsecase _usecase;
         private StageState _state;
@@ -34,6 +35,8 @@ namespace GGJ2025.InGame
             
             playerView.GetState().GradeRP.Subscribe(_usecase.UpdatePlayerSize);
             playerView.GetState().VerticalRateRP.Subscribe(_usecase.UpdatePlayerVerticalRate);
+            
+            backgroundView.OnStart(this);
         }
         
         public StageState GetState()

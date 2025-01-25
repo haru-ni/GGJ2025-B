@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using GGJ2025.Master;
 using UniRx;
 
@@ -8,17 +7,14 @@ namespace GGJ2025.InGame
     {
         /** マスター */
         public readonly StageMaster Master;
-        /** ステージの長さ */
-        public readonly List<int> StageLength = new() {10, 20, 30, 40, 9999};
-        
-        /** 現在のステージ */
-        public int StageNum { get; private set; }
 
         /** プレイヤーサイズ速度 */
         private int _playerSizeSpeed;
         /** プレイヤーY座標ボーナス */
         private float _playerHeightSpeedBonus;
         
+        /** 現在のステージ */
+        private readonly IntReactiveProperty _stageNum = new();
         /** 速度 */
         private readonly FloatReactiveProperty _climbSpeed = new();
         /** 時間 */
@@ -26,6 +22,7 @@ namespace GGJ2025.InGame
         /** 高さ */
         private readonly FloatReactiveProperty _height = new();
         
+        public IReadOnlyReactiveProperty<int> StageNumRP => _stageNum;
         public IReadOnlyReactiveProperty<float> ClimbSpeedRP => _climbSpeed;
         public IReadOnlyReactiveProperty<float> TimerRP => _timer;
         public IReadOnlyReactiveProperty<float> HeightRP => _height;
@@ -33,7 +30,7 @@ namespace GGJ2025.InGame
         public StageState(StageMaster master)
         {
             Master = master;
-            StageNum = 1;
+            _stageNum.Value = 1;
             _timer.Value = 0;
             _height.Value = 0;
         }
@@ -53,7 +50,7 @@ namespace GGJ2025.InGame
         /** ステージ移動 */
         public void NextStage()
         {
-            StageNum += 1;
+            _stageNum.Value += 1;
         }
         
         /** プレイヤーサイズボーナス更新 */

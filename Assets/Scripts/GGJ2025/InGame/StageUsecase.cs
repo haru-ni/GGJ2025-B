@@ -53,10 +53,10 @@ namespace GGJ2025.InGame
         {
             return _state.HeightRP.Subscribe(height =>
             {
-                var stageLength = _state.Master.StageLength[_state.StageNum - 1];
+                var stageLength = _state.Master.StageLength[_state.StageNumRP.Value - 1];
                 if (height >= stageLength)
                 {
-                    stageProgressAction(_state.StageNum);
+                    stageProgressAction(_state.StageNumRP.Value);
                 }
             });
         }
