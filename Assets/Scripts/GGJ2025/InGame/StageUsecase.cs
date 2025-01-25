@@ -1,6 +1,5 @@
 using System;
 using UniRx;
-using UnityEngine;
 
 namespace GGJ2025.InGame
 {
@@ -54,7 +53,7 @@ namespace GGJ2025.InGame
         {
             return _state.HeightRP.Subscribe(height =>
             {
-                var stageLength = _state.StageLength[_state.StageNum - 1];
+                var stageLength = _state.Master.StageLength[_state.StageNum - 1];
                 if (height >= stageLength)
                 {
                     stageProgressAction(_state.StageNum);
