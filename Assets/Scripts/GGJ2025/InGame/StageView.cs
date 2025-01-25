@@ -29,7 +29,6 @@ namespace GGJ2025.InGame
         
         private void StartItemTimer(float waitTime)
         {
-            Debug.Log("StartItemTimer: " + waitTime);
             if (_itemFloatWrapper == null)
             {
                 _itemFloatWrapper = new FloatWrapper(waitTime);
@@ -46,6 +45,12 @@ namespace GGJ2025.InGame
             {
                 _usecase.TimeProgress(Time.deltaTime);
             });
+            
+            this.UpdateAsObservable()
+                .Select(_ => Input.GetKeyDown(KeyCode.Space))
+                .Where(x => x)
+                .FirstOrDefault()
+                .Subscribe(_ => _usecase.GameClear(playerView)).AddTo(this);
             
             playerView.GetState().PointRP.Subscribe(_usecase.UpdatePlayerPoint);
             playerView.GetState().VerticalRateRP.Subscribe(_usecase.UpdatePlayerVerticalRate);

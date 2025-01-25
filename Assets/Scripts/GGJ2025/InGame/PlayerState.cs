@@ -67,6 +67,15 @@ namespace GGJ2025.InGame
             Speed = new Vector2(Speed.x, y);
         }
         
+        /** 入力停止 */
+        public void StopInput()
+        {
+            _isGameOver.Value = true;
+            _isGameOver.Dispose();
+            _point.Dispose();
+            _verticalRate.Dispose();
+        }
+        
         /** 移動 */
         public void Move(Vector2 nextPos)
         {

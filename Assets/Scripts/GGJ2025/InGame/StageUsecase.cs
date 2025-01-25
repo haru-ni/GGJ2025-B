@@ -1,6 +1,7 @@
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GGJ2025.InGame
 {
@@ -86,10 +87,29 @@ namespace GGJ2025.InGame
             itemView.OnStart(_state.PlayerView, stageView);
         }
         
+        /** ゲームクリア */
+        public void GameClear(PlayerView playerView)
+        {
+            _state.GameOver();
+            ScoreManager.GameClear(playerView.GetState().PointRP.Value, _state.TimeBonusRP.Value);
+            playerView.StopInput();
+            
+            Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ =>
+            {
+                SceneManager.LoadScene("ResultScene");
+            });
+        }
+        
         /** ゲームオーバー */
         public void GameOver(bool isGameOver)
         {
             _state.GameOver();
+            ScoreManager.GameOver();
+            
+            Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ =>
+            {
+                SceneManager.LoadScene("ResultScene");
+            });
         }
         
     }

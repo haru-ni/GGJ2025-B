@@ -39,6 +39,12 @@ namespace GGJ2025.InGame
             var speedY = y * _state.Master.MoveSpeed;
             _state.SetVerticalSpeed(speedY);
         }
+        
+        /** 入力終了 */
+        public void StopInput()
+        {
+            _state.StopInput();
+        }
 
         /** 更新移動 */
         public void UpdateMove(float deltaTime)

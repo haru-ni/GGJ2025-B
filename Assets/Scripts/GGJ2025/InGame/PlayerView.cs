@@ -33,9 +33,6 @@ namespace GGJ2025.InGame
             _inputProvider.VerticalButtonHold
                 .Where(x => x != 0)
                 .Subscribe(_usecase.MoveVertical).AddTo(this);
-            _inputProvider.SpaceButton
-                .Where(x => x)
-                .Subscribe(_ => _usecase.AddPoint(1)).AddTo(this);
             this.UpdateAsObservable()
                 .Subscribe(_ => _usecase.UpdateMove(Time.deltaTime)).AddTo(this);
             StartInput();
@@ -51,6 +48,7 @@ namespace GGJ2025.InGame
         public void StopInput()
         {
             _inputProvider.StopInput();
+            _usecase.StopInput();
         }
         
         /** アイテム取得 */
