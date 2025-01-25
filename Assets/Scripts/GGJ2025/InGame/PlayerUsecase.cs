@@ -68,6 +68,12 @@ namespace GGJ2025.InGame
             _state.Move(nextPos);
             
         }
+        
+        /** ゲームオーバー */
+        public void GameOver()
+        {
+            _state.Dispose();
+        }
 
     }
 }

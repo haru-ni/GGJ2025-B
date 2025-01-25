@@ -10,6 +10,8 @@ namespace GGJ2025.InGame
         private readonly IntReactiveProperty _grade = new();
         /** Y軸 */
         private readonly FloatReactiveProperty _verticalRate = new();
+        /** ゲームオーバー */
+        private readonly BoolReactiveProperty _isGameOver = new();
         
         /** サイズ */
         public Vector2 Size { get; private set; }
@@ -22,6 +24,7 @@ namespace GGJ2025.InGame
 
         public IReadOnlyReactiveProperty<int> GradeRP => _grade;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
+        public IReadOnlyReactiveProperty<bool> IsGameOverRP => _isGameOver;
 
         /** 速度下限 */
         public const float MinSpeed = 10f;
@@ -61,6 +64,16 @@ namespace GGJ2025.InGame
         {
             Transform.localPosition = nextPos;
             _verticalRate.Value = (nextPos.y + (float)GameConst.StageHeight / 2) / GameConst.StageHeight;
+        }
+        
+        /** 破棄 */
+        public void Dispose()
+        {
+            _isGameOver.Value = true;
+            _isGameOver.Dispose();
+            _grade.Dispose();
+            _verticalRate.Dispose();
+            Object.Destroy(Transform.gameObject);
         }
         
     }

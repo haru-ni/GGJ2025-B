@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd12e82dc50449b90ad1603dfeff938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerView: {fileID: 2092564208}
   stageView: {fileID: 1894841746}
   stageUIView: {fileID: 1288883679}
 --- !u!4 &63516141
@@ -1046,7 +1045,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   master: {fileID: 11400000, guid: 68206ed41ae79481aafe90b64859749b, type: 2}
+  playerView: {fileID: 2092564208}
+  obstacleParent: {fileID: 1825837491}
   backgroundView: {fileID: 1333312906}
+  obstaclePrefabs:
+  - {fileID: 386229434056898762, guid: d217d9619b46b4230b118f7498789d03, type: 3}
+  - {fileID: 386229434056898762, guid: 753fb3250b2d242dca7d8d4bef1e0365, type: 3}
+  - {fileID: 386229434056898762, guid: e2cc07f9daac34fdeb248b64e8cb581a, type: 3}
 --- !u!1 &1915615189
 GameObject:
   m_ObjectHideFlags: 0

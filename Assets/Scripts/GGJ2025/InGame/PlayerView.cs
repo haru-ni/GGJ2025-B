@@ -51,6 +51,13 @@ namespace GGJ2025.InGame
             _inputProvider.StopInput();
         }
         
+        /** ヒット */
+        public void OnHit()
+        {
+            _usecase.GameOver();
+            StopInput();
+        }
+        
         public PlayerState GetState()
         {
             return _state;

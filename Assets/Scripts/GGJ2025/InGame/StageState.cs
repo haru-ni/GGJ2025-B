@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using GGJ2025.Master;
 using UniRx;
+using UnityEngine;
 
 namespace GGJ2025.InGame
 {
@@ -7,6 +9,12 @@ namespace GGJ2025.InGame
     {
         /** マスター */
         public readonly StageMaster Master;
+        /** プレハブ */
+        public readonly List<GameObject> ObstaclePrefabs;
+        /** 障害物親 */
+        public readonly Transform ObstacleParent;
+        /** プレイヤー */
+        public readonly PlayerView PlayerView;
 
         /** プレイヤーサイズ速度 */
         private int _playerSizeSpeed;
@@ -27,9 +35,12 @@ namespace GGJ2025.InGame
         public IReadOnlyReactiveProperty<float> TimerRP => _timer;
         public IReadOnlyReactiveProperty<float> HeightRP => _height;
         
-        public StageState(StageMaster master)
+        public StageState(StageMaster master, List<GameObject> obstaclePrefabs, Transform parent, PlayerView playerView)
         {
             Master = master;
+            ObstaclePrefabs = obstaclePrefabs;
+            ObstacleParent = parent;
+            PlayerView = playerView;
             _stageNum.Value = 1;
             _timer.Value = 0;
             _height.Value = 0;
@@ -69,6 +80,15 @@ namespace GGJ2025.InGame
         public void UpdateClimbSpeed()
         {
             _climbSpeed.Value = _playerSizeSpeed * _playerHeightSpeedBonus;
+        }
+        
+        /** ゲームオーバー */
+        public void GameOver()
+        {
+            _stageNum.Dispose();
+            _climbSpeed.Dispose();
+            _timer.Dispose();
+            _height.Dispose();
         }
         
     }

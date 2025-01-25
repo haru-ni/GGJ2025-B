@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 
 namespace GGJ2025.InGame
 {
@@ -48,6 +49,39 @@ namespace GGJ2025.InGame
             _state.NextStage();
         }
         
+        /** 障害物生成開始 */
+        public void StartObstacleTimer(StageView stageView)
+        {
+            const float waitTime = 3.0f;
+            Observable.CreateWithState<float, float>(waitTime, (fireTime, observer) =>
+            {
+                return _state.TimerRP
+                    .Where(time => time > fireTime)
+                    .Skip(1)
+                    .Subscribe(time =>
+                    {
+                        observer.OnNext(time);
+                        fireTime = time + waitTime;
+                    });
+            }).Subscribe(_ =>
+            {
+                CreateObstacle(stageView, true);
+                CreateObstacle(stageView, false);
+            });
+        }
+        
+        /** 障害物生成 */
+        private void CreateObstacle(StageView stageView, bool isLeft)
+        {
+            // 障害物生成
+            // 0 ~ 2の乱数生成
+            // var randomIndex = (_state.StageNumRP.Value - 1) * 2 + UnityEngine.Random.Range(0, 3);
+            var randomIndex = 0;
+            var obstacle = UnityEngine.Object.Instantiate(_state.ObstaclePrefabs[randomIndex], _state.ObstacleParent);
+            var obstacleView = obstacle.GetComponent<ObstacleView>();
+            obstacleView.OnStart(_state.PlayerView, stageView, isLeft);
+        }
+        
         /** ステージ経過購読 */
         public IDisposable SubscribeStageProgress(Action<int> stageProgressAction)
         {
@@ -59,6 +93,12 @@ namespace GGJ2025.InGame
                     stageProgressAction(_state.StageNumRP.Value);
                 }
             });
+        }
+        
+        /** ゲームオーバー */
+        public void GameOver(bool isGameOver)
+        {
+            _state.GameOver();
         }
         
     }
