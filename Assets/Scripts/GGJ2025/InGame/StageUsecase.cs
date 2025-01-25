@@ -24,7 +24,7 @@ namespace GGJ2025.InGame
         /** プレイヤーサイズ更新 */
         public void UpdatePlayerPoint(int point)
         {
-            _state.UpdatePlayerSizeSpeed(1 + _state.Master.PointSpeed * point);
+            _state.UpdatePlayerSizeSpeed(Mathf.Lerp(_state.Master.MinSpeed, _state.Master.MaxSpeed, Mathf.Min(1, point / _state.Master.MaxPointSpeed)));
             _state.UpdateClimbSpeed();
         }
         
@@ -71,8 +71,7 @@ namespace GGJ2025.InGame
         {
             // 障害物生成
             // 0 ~ 2の乱数生成
-            // var randomIndex = (_state.StageNumRP.Value - 1) * 2 + UnityEngine.Random.Range(0, 3);
-            var randomIndex = 0;
+            var randomIndex = UnityEngine.Random.Range(0, 3);
             var obstacle = UnityEngine.Object.Instantiate(_state.ObstaclePrefabs[randomIndex], _state.ObstacleParent);
             var obstacleView = obstacle.GetComponent<ObstacleView>();
             obstacleView.OnStart(_state.PlayerView, stageView, isLeft);

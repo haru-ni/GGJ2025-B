@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c900cb5513ba441bac06231458aea67c, type: 3}
   m_Name: PlayerMaster
   m_EditorClassIdentifier: 
-  baseSpeed: 300
+  moveSpeed: 300
   speedDecayRate: 5.2
   maxPoint: 100
+  minSize: 50
+  maxSize: 400

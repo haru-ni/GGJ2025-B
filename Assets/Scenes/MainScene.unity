@@ -1050,8 +1050,8 @@ MonoBehaviour:
   backgroundView: {fileID: 1333312906}
   obstaclePrefabs:
   - {fileID: 386229434056898762, guid: d217d9619b46b4230b118f7498789d03, type: 3}
-  - {fileID: 386229434056898762, guid: 753fb3250b2d242dca7d8d4bef1e0365, type: 3}
-  - {fileID: 386229434056898762, guid: e2cc07f9daac34fdeb248b64e8cb581a, type: 3}
+  - {fileID: 386229434056898762, guid: 2c0d35327f3674c0fa7095088bde758d, type: 3}
+  - {fileID: 386229434056898762, guid: a661f220b9baf4539acf18082bfe8807, type: 3}
 --- !u!1 &1915615189
 GameObject:
   m_ObjectHideFlags: 0

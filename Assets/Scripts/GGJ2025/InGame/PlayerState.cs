@@ -22,7 +22,7 @@ namespace GGJ2025.InGame
         /** 位置 */
         public readonly RectTransform Transform;
         /** マスター */
-        public PlayerMaster Master { get; private set; }
+        public PlayerMaster Master { get; }
 
         public IReadOnlyReactiveProperty<int> PointRP => _point;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
@@ -49,9 +49,10 @@ namespace GGJ2025.InGame
         /** サイズ変更 */
         public void UpdateSize(float sizeRate)
         {
-            Size = sizeRate * Master.MaxSize / 2;
-            Debug.Log(Size);
-            _spriteTransform.localScale = new Vector3(sizeRate, sizeRate, 1);
+            Size = Mathf.Lerp(Master.MinSize / 2, Master.MaxSize / 2, sizeRate);
+            var scale = Master.MinSize / Master.MaxSize + sizeRate * (1 - Master.MinSize / Master.MaxSize);
+            // Debug.Log($"Size : {Size} / Scale : {scale}");
+            _spriteTransform.localScale = new Vector2(scale, scale);
         }
         
         /** 左右スピード */

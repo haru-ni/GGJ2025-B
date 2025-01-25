@@ -10,8 +10,12 @@ namespace GGJ2025.Master
     {
         /** 最大レベル */
         [SerializeField] private int maxLevel;
-        /** ポイントあたり速度 */
-        [SerializeField] private float pointSpeed;
+        /** 最大速度ポイント */
+        [SerializeField] private float maxPointSpeed;
+        /** 最小速度 */
+        [SerializeField] private float minSpeed;
+        /** 最大速度 */
+        [SerializeField] private float maxSpeed;
         
         /** ステージの長さ */
         [SerializeField] private int stageLengthCount;
@@ -25,7 +29,9 @@ namespace GGJ2025.Master
         [SerializeField] private List<float> playerHeightSpeedRateList;
         
         public int MaxLevel => maxLevel;
-        public float PointSpeed => pointSpeed;
+        public float MaxPointSpeed => maxPointSpeed;
+        public float MinSpeed => minSpeed;
+        public float MaxSpeed => maxSpeed;
         public List<int> StageLength => stageLength;
         public List<float> PlayerHeightList => playerHeightList;
         public List<float> PlayerHeightSpeedBonusList => playerHeightSpeedRateList;
@@ -51,7 +57,9 @@ namespace GGJ2025.Master
                 
                 MyEditorUtils.DrawMasterHeader("ステージ", master, serializedObject);
                 MyEditorUtils.DrawIntField("最大レベル", ref master.maxLevel);
-                MyEditorUtils.DrawFloatField("ポイントあたり速度", ref master.pointSpeed);
+                MyEditorUtils.DrawFloatField("最大速度ポイント", ref master.maxPointSpeed);
+                MyEditorUtils.DrawFloatField("最小速度", ref master.minSpeed);
+                MyEditorUtils.DrawFloatField("最大速度", ref master.maxSpeed);
                 
                 #region ステージの長さ
                 MyEditorUtils.DrawIntField("ステージの長さ数", ref master.stageLengthCount);

@@ -21,6 +21,11 @@ namespace GGJ2025.InGame
             var posX = isLeft ? -stageHalfWidth + rect.sizeDelta.x / 2 : stageHalfWidth - rect.sizeDelta.x / 2;
             var posY = GameConst.StageHeight / 2 + 100;
             _state.Move(new Vector2(posX, posY));
+            
+            if (!isLeft)
+            {
+                _state.Rotate(180);
+            }
         }
         
         /** 速度変更 */

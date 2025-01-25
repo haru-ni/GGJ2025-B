@@ -33,6 +33,12 @@ namespace GGJ2025.InGame
             Transform.localPosition = nextPosition;
         }
         
+        /** 回転 */
+        public void Rotate(float angle)
+        {
+            Transform.localRotation = Quaternion.Euler(0, 0, angle);
+        }
+        
         /** ゲームオーバー */
         public void OnGameOver()
         {

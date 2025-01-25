@@ -15,6 +15,7 @@ namespace GGJ2025.InGame
         /** 初期化 */
         public void Init()
         {
+            _state.UpdateSize(0);
         }
         
         /** ポイント追加 */
@@ -28,14 +29,14 @@ namespace GGJ2025.InGame
         /** 左右入力 */
         public void MoveHorizontal(float x)
         {
-            var speedX = x * _state.Master.BaseSpeed;
+            var speedX = x * _state.Master.MoveSpeed;
             _state.SetHorizontalSpeed(speedX);
         }
         
         /** 上下入力 */
         public void MoveVertical(float y)
         {
-            var speedY = y * _state.Master.BaseSpeed;
+            var speedY = y * _state.Master.MoveSpeed;
             _state.SetVerticalSpeed(speedY);
         }
 
