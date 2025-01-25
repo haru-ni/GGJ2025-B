@@ -6,45 +6,52 @@ namespace GGJ2025.InGame
 {
     public class PlayerState
     {
-        /** グレード */
-        private readonly IntReactiveProperty _grade = new();
+        /** ポイント */
+        private readonly IntReactiveProperty _point = new();
         /** Y軸 */
         private readonly FloatReactiveProperty _verticalRate = new();
         /** ゲームオーバー */
         private readonly BoolReactiveProperty _isGameOver = new();
+        /** Spriteサイズ */
+        private readonly RectTransform _spriteTransform;
         
         /** サイズ */
-        public Vector2 Size { get; private set; }
+        public float Size { get; private set; }
         /** 速度 */
         public Vector2 Speed { get; private set; }
         /** 位置 */
-        public readonly Transform Transform;
+        public readonly RectTransform Transform;
         /** マスター */
         public PlayerMaster Master { get; private set; }
 
-        public IReadOnlyReactiveProperty<int> GradeRP => _grade;
+        public IReadOnlyReactiveProperty<int> PointRP => _point;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
         public IReadOnlyReactiveProperty<bool> IsGameOverRP => _isGameOver;
 
         /** 速度下限 */
         public const float MinSpeed = 10f;
 
-        public PlayerState(PlayerMaster master, Transform transform)
+        public PlayerState(PlayerMaster master, RectTransform transform, RectTransform spriteTransform)
         {
             Master = master;
             Transform = transform;
+            _spriteTransform = spriteTransform;
+            
+            transform.sizeDelta = new Vector2(master.MaxSize, master.MaxSize);
         }
         
-        /** グレード変更 */
-        public void ChangeGrade(int grade)
+        /** ポイント追加 */
+        public void AddPoint(int point)
         {
-            _grade.Value = grade;
+            _point.Value += point;
         }
         
         /** サイズ変更 */
-        public void ChangeSize(Vector2 size)
+        public void UpdateSize(float sizeRate)
         {
-            Size = size;
+            Size = sizeRate * Master.MaxSize / 2;
+            Debug.Log(Size);
+            _spriteTransform.localScale = new Vector3(sizeRate, sizeRate, 1);
         }
         
         /** 左右スピード */
@@ -71,7 +78,7 @@ namespace GGJ2025.InGame
         {
             _isGameOver.Value = true;
             _isGameOver.Dispose();
-            _grade.Dispose();
+            _point.Dispose();
             _verticalRate.Dispose();
             Object.Destroy(Transform.gameObject);
         }

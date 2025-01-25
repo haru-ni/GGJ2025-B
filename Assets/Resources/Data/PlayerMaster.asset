@@ -14,9 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSpeed: 300
   speedDecayRate: 5.2
-  maxGrade: 4
-  sizeList:
-  - {x: 30, y: 30}
-  - {x: 60, y: 60}
-  - {x: 90, y: 90}
-  - {x: 120, y: 120}
+  maxPoint: 100

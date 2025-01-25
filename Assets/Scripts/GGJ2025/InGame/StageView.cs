@@ -29,14 +29,14 @@ namespace GGJ2025.InGame
             _usecase.SubscribeStageProgress(stageNum =>
             {
                 _usecase.NextStage();
-            });
+            }).AddTo(this);
             
             this.UpdateAsObservable().Subscribe(_ =>
             {
                 _usecase.TimeProgress(Time.deltaTime);
             });
             
-            playerView.GetState().GradeRP.Subscribe(_usecase.UpdatePlayerSize);
+            playerView.GetState().PointRP.Subscribe(_usecase.UpdatePlayerPoint);
             playerView.GetState().VerticalRateRP.Subscribe(_usecase.UpdatePlayerVerticalRate);
             playerView.GetState().IsGameOverRP
                 .Where(x => x)

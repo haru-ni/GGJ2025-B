@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StageMaster
   m_EditorClassIdentifier: 
   maxLevel: 0
+  pointSpeed: 30
   stageLengthCount: 4
   stageLength: e8030000b80b0000881300000f270000
   sizeBonusCount: 5

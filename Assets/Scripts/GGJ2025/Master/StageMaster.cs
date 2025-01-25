@@ -10,15 +10,12 @@ namespace GGJ2025.Master
     {
         /** 最大レベル */
         [SerializeField] private int maxLevel;
+        /** ポイントあたり速度 */
+        [SerializeField] private float pointSpeed;
         
         /** ステージの長さ */
         [SerializeField] private int stageLengthCount;
         [SerializeField] private List<int> stageLength;
-        
-        /** サイズ速度数 */
-        [SerializeField] private int sizeBonusCount;
-        /** サイズ速度リスト */
-        [SerializeField] private List<int> sizeSpeedList;
         
         /** プレイヤー高さボーナス数 */
         [SerializeField] private int playerHeightBonusCount;
@@ -28,8 +25,8 @@ namespace GGJ2025.Master
         [SerializeField] private List<float> playerHeightSpeedRateList;
         
         public int MaxLevel => maxLevel;
+        public float PointSpeed => pointSpeed;
         public List<int> StageLength => stageLength;
-        public List<int> SizeSpeedList => sizeSpeedList;
         public List<float> PlayerHeightList => playerHeightList;
         public List<float> PlayerHeightSpeedBonusList => playerHeightSpeedRateList;
         
@@ -44,7 +41,6 @@ namespace GGJ2025.Master
             private void OnEnable()
             {
                 var master = (StageMaster) target;
-                master.sizeSpeedList ??= new List<int>();
                 master.playerHeightList ??= new List<float>();
                 master.playerHeightSpeedRateList ??= new List<float>();
             }
@@ -55,6 +51,7 @@ namespace GGJ2025.Master
                 
                 MyEditorUtils.DrawMasterHeader("ステージ", master, serializedObject);
                 MyEditorUtils.DrawIntField("最大レベル", ref master.maxLevel);
+                MyEditorUtils.DrawFloatField("ポイントあたり速度", ref master.pointSpeed);
                 
                 #region ステージの長さ
                 MyEditorUtils.DrawIntField("ステージの長さ数", ref master.stageLengthCount);
@@ -72,25 +69,6 @@ namespace GGJ2025.Master
                         master.stageLength.Add(0);
                     }
                     master.stageLength[i] = EditorGUILayout.IntField("", master.stageLength[i]);    
-                }
-                #endregion
-                
-                #region サイズ速度
-                MyEditorUtils.DrawIntField("サイズ速度数", ref master.sizeBonusCount);
-                
-                EditorGUILayout.LabelField("");
-                EditorGUILayout.LabelField("サイズ速度リスト");
-                if (master.sizeSpeedList.Count > master.sizeBonusCount)
-                {
-                    master.sizeSpeedList = master.sizeSpeedList.Take(master.sizeBonusCount).ToList();
-                }
-                for (var i = 0; i < master.sizeBonusCount; i++)
-                {
-                    if (master.sizeSpeedList.Count <= i)
-                    {
-                        master.sizeSpeedList.Add(0);
-                    }
-                    master.sizeSpeedList[i] = EditorGUILayout.IntField("", master.sizeSpeedList[i]);    
                 }
                 #endregion
 

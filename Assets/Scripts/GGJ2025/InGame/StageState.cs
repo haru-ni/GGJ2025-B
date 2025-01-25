@@ -17,7 +17,7 @@ namespace GGJ2025.InGame
         public readonly PlayerView PlayerView;
 
         /** プレイヤーサイズ速度 */
-        private int _playerSizeSpeed;
+        private float _playerSizeSpeed;
         /** プレイヤーY座標ボーナス */
         private float _playerHeightSpeedBonus;
         
@@ -61,11 +61,11 @@ namespace GGJ2025.InGame
         /** ステージ移動 */
         public void NextStage()
         {
-            _stageNum.Value += 1;
+            _stageNum.Value += Mathf.Min(Master.MaxLevel, _stageNum.Value + 1);
         }
         
         /** プレイヤーサイズボーナス更新 */
-        public void UpdatePlayerSizeSpeed(int speed)
+        public void UpdatePlayerSizeSpeed(float speed)
         {
             _playerSizeSpeed = speed;
         }

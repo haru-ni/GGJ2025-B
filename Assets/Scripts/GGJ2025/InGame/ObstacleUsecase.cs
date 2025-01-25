@@ -62,7 +62,7 @@ namespace GGJ2025.InGame
             }
             
             // playerのサイズ(円)と障害物のRectTransform(矩形)で判定
-            var playerSize = playerView.GetState().Size.x;
+            var playerSize = playerView.GetState().Size;
             var playerPos = playerView.GetState().Transform.localPosition;
             var obstaclePos = _state.Transform.localPosition;
             var obstacleSize = _state.Transform.sizeDelta;

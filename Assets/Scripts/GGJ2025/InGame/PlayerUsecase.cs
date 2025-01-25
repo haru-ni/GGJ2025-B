@@ -15,21 +15,14 @@ namespace GGJ2025.InGame
         /** 初期化 */
         public void Init()
         {
-            var initGrade = 1;
-            _state.ChangeGrade(initGrade);
-            _state.ChangeSize(_state.Master.SizeList[initGrade - 1]);
         }
         
-        /** グレード変更 */
-        public void AddGrade(int grade)
+        /** ポイント追加 */
+        public void AddPoint(int point)
         {
-            var nextGrade = _state.GradeRP.Value + grade;
-            if (nextGrade > _state.Master.MaxGrade)
-            {
-                return;
-            }
-            _state.ChangeGrade(nextGrade);
-            _state.ChangeSize(_state.Master.SizeList[nextGrade - 1]);
+            _state.AddPoint(point);
+            var sizeRate = Mathf.Min(1, (float)_state.PointRP.Value / _state.Master.MaxPoint);
+            _state.UpdateSize(sizeRate);
         }
         
         /** 左右入力 */
@@ -61,8 +54,8 @@ namespace GGJ2025.InGame
             
             // 移動
             var currentPos = _state.Transform.localPosition;
-            var nextPosX = Mathf.Clamp(currentPos.x + _state.Speed.x * deltaTime, -360F + _state.Size.x / 2, 360F - _state.Size.x / 2);
-            var nextPosY = Mathf.Clamp(currentPos.y + _state.Speed.y * deltaTime, -360F + _state.Size.y / 2, 360F - _state.Size.y / 2);
+            var nextPosX = Mathf.Clamp(currentPos.x + _state.Speed.x * deltaTime, -360F + _state.Size / 2, 360F - _state.Size / 2);
+            var nextPosY = Mathf.Clamp(currentPos.y + _state.Speed.y * deltaTime, -360F + _state.Size / 2, 360F - _state.Size / 2);
             var nextPos = new Vector2(nextPosX, nextPosY);
             
             _state.Move(nextPos);

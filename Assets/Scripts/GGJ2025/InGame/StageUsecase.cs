@@ -22,13 +22,9 @@ namespace GGJ2025.InGame
         }
         
         /** プレイヤーサイズ更新 */
-        public void UpdatePlayerSize(int size)
+        public void UpdatePlayerPoint(int point)
         {
-            if (size < 1 || size > _state.Master.SizeSpeedList.Count)
-            {
-                return;
-            }
-            _state.UpdatePlayerSizeSpeed(_state.Master.SizeSpeedList[size - 1]);
+            _state.UpdatePlayerSizeSpeed(1 + _state.Master.PointSpeed * point);
             _state.UpdateClimbSpeed();
         }
         

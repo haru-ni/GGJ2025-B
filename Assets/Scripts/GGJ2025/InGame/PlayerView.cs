@@ -9,6 +9,7 @@ namespace GGJ2025.InGame
     public class PlayerView: MonoBehaviour
     {
         [SerializeField] private PlayerMaster master;
+        [SerializeField] private RectTransform spriteTransform;
         
         private PlayerUsecase _usecase;
         private PlayerState _state;
@@ -16,7 +17,8 @@ namespace GGJ2025.InGame
         
         private void Awake()
         {
-            _state = new PlayerState(master, transform);
+            var rectTransform = GetComponent<RectTransform>();
+            _state = new PlayerState(master, rectTransform, spriteTransform);
             _usecase = new PlayerUsecase(_state);
             _inputProvider = GetComponent<PlayerInputProvider>();
         }
@@ -33,7 +35,7 @@ namespace GGJ2025.InGame
                 .Subscribe(_usecase.MoveVertical).AddTo(this);
             _inputProvider.SpaceButton
                 .Where(x => x)
-                .Subscribe(_ => _usecase.AddGrade(1)).AddTo(this);
+                .Subscribe(_ => _usecase.AddPoint(1)).AddTo(this);
             this.UpdateAsObservable()
                 .Subscribe(_ => _usecase.UpdateMove(Time.deltaTime)).AddTo(this);
             StartInput();
