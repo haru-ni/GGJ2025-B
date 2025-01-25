@@ -1,0 +1,6 @@
+sabao.png
+size:512,512
+filter:Linear,Linear
+pma:true
+icon_shabon
+bounds:2,2,477,476
