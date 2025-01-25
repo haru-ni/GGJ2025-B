@@ -52,17 +52,17 @@ namespace GGJ2025.InGame
             // 速度減衰
             var nextSpeedX = Mathf.Abs(_state.Speed.x) < PlayerState.MinSpeed
                 ? 0
-                : Mathf.Lerp(_state.Speed.x, 0, _state.Master.DampingRate);
+                : Mathf.Lerp(_state.Speed.x, 0, _state.Master.DampingRate * deltaTime);
             var nextSpeedY = Mathf.Abs(_state.Speed.y) < PlayerState.MinSpeed
                 ? 0
-                : Mathf.Lerp(_state.Speed.y, 0, _state.Master.DampingRate);
+                : Mathf.Lerp(_state.Speed.y, 0, _state.Master.DampingRate * deltaTime);
             _state.SetHorizontalSpeed(nextSpeedX);
             _state.SetVerticalSpeed(nextSpeedY);
             
             // 移動
             var currentPos = _state.Transform.localPosition;
-            var nextPosX = Mathf.Clamp(currentPos.x + _state.Speed.x * deltaTime, -GameConst.StageWidth / 2 + _state.Size.x / 2, GameConst.StageWidth / 2 - _state.Size.x / 2);
-            var nextPosY = Mathf.Clamp(currentPos.y + _state.Speed.y * deltaTime, -GameConst.StageHeight / 2 + _state.Size.y / 2, GameConst.StageHeight / 2 - _state.Size.y / 2);
+            var nextPosX = Mathf.Clamp(currentPos.x + _state.Speed.x * deltaTime, -360F + _state.Size.x / 2, 360F - _state.Size.x / 2);
+            var nextPosY = Mathf.Clamp(currentPos.y + _state.Speed.y * deltaTime, -360F + _state.Size.y / 2, 360F - _state.Size.y / 2);
             var nextPos = new Vector2(nextPosX, nextPosY);
             
             _state.Move(nextPos);

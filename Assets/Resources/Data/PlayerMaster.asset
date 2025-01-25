@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerMaster
   m_EditorClassIdentifier: 
   baseSpeed: 300
-  speedDecayRate: 0.02
+  speedDecayRate: 5.2
   maxGrade: 4
   sizeList:
   - {x: 30, y: 30}

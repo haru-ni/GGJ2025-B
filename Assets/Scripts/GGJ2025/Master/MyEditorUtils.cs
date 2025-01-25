@@ -1,6 +1,8 @@
-﻿using System;
+﻿
+#if UNITY_EDITOR
+
+using System;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace GGJ2025.Master
@@ -58,3 +60,5 @@ namespace GGJ2025.Master
         }
     }
 }
+
+#endif

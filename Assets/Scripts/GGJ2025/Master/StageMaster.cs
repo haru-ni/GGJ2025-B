@@ -33,18 +33,22 @@ namespace GGJ2025.Master
         public List<float> PlayerHeightList => playerHeightList;
         public List<float> PlayerHeightSpeedBonusList => playerHeightSpeedRateList;
         
-        private void OnEnable()
-        {
-            sizeSpeedList ??= new List<int>();
-            playerHeightList ??= new List<float>();
-            playerHeightSpeedRateList ??= new List<float>();
-        }
+
         
         # if UNITY_EDITOR
         
         [CustomEditor(typeof(StageMaster))]
         public class StageMasterEditor: Editor
         {
+            
+            private void OnEnable()
+            {
+                var master = (StageMaster) target;
+                master.sizeSpeedList ??= new List<int>();
+                master.playerHeightList ??= new List<float>();
+                master.playerHeightSpeedRateList ??= new List<float>();
+            }
+            
             public override void OnInspectorGUI()
             {
                 var master = (StageMaster) target;
