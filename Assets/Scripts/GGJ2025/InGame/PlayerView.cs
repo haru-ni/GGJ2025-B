@@ -53,6 +53,12 @@ namespace GGJ2025.InGame
             _inputProvider.StopInput();
         }
         
+        /** アイテム取得 */
+        public void OnGetItem()
+        {
+            _usecase.AddPoint(1);
+        }
+        
         /** ヒット */
         public void OnHit()
         {

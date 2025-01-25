@@ -8,8 +8,6 @@ namespace GGJ2025.Master
     [CreateAssetMenu(menuName = "GGJ2025/StageMaster")]
     public class StageMaster : ScriptableObject
     {
-        /** 最大レベル */
-        [SerializeField] private int maxLevel;
         /** 最大速度ポイント */
         [SerializeField] private float maxPointSpeed;
         /** 最小速度 */
@@ -17,10 +15,15 @@ namespace GGJ2025.Master
         /** 最大速度 */
         [SerializeField] private float maxSpeed;
         
-        /** ステージの長さ */
-        [SerializeField] private int stageLengthCount;
-        [SerializeField] private List<int> stageLength;
+        /** 最大時間 */
+        [SerializeField] private float bonusMaxTime; 
+        /** 最大時間倍率 */
+        [SerializeField] private float maxTimeBonusRate;
+        /** 最小時間倍率 */
+        [SerializeField] private float minTimeBonusRate;
         
+        /** 基本アイテム生成時間 */
+        [SerializeField] private float itemBaseTime;
         /** プレイヤー高さボーナス数 */
         [SerializeField] private int playerHeightBonusCount;
         /** プレイヤー座標リスト */
@@ -28,11 +31,15 @@ namespace GGJ2025.Master
         /** プレイヤー座標倍率リスト */
         [SerializeField] private List<float> playerHeightSpeedRateList;
         
-        public int MaxLevel => maxLevel;
         public float MaxPointSpeed => maxPointSpeed;
         public float MinSpeed => minSpeed;
         public float MaxSpeed => maxSpeed;
-        public List<int> StageLength => stageLength;
+        
+        public float BonusMaxTime => bonusMaxTime;
+        public float MaxTimeBonus => maxTimeBonusRate;
+        public float MinTimeBonus => minTimeBonusRate;
+        
+        public float ItemBaseTime => itemBaseTime;
         public List<float> PlayerHeightList => playerHeightList;
         public List<float> PlayerHeightSpeedBonusList => playerHeightSpeedRateList;
         
@@ -56,31 +63,16 @@ namespace GGJ2025.Master
                 var master = (StageMaster) target;
                 
                 MyEditorUtils.DrawMasterHeader("ステージ", master, serializedObject);
-                MyEditorUtils.DrawIntField("最大レベル", ref master.maxLevel);
                 MyEditorUtils.DrawFloatField("最大速度ポイント", ref master.maxPointSpeed);
                 MyEditorUtils.DrawFloatField("最小速度", ref master.minSpeed);
                 MyEditorUtils.DrawFloatField("最大速度", ref master.maxSpeed);
                 
-                #region ステージの長さ
-                MyEditorUtils.DrawIntField("ステージの長さ数", ref master.stageLengthCount);
-                    
-                EditorGUILayout.LabelField("");
-                EditorGUILayout.LabelField("ステージの長さリスト");
-                if (master.stageLength.Count > master.stageLengthCount)
-                {
-                    master.stageLength = master.stageLength.Take(master.stageLengthCount).ToList();
-                }
-                for (var i = 0; i < master.stageLengthCount; i++)
-                {
-                    if (master.stageLength.Count <= i)
-                    {
-                        master.stageLength.Add(0);
-                    }
-                    master.stageLength[i] = EditorGUILayout.IntField("", master.stageLength[i]);    
-                }
-                #endregion
-
+                MyEditorUtils.DrawFloatField("最大時間", ref master.bonusMaxTime);
+                MyEditorUtils.DrawFloatField("最大時間倍率", ref master.maxTimeBonusRate);
+                MyEditorUtils.DrawFloatField("最小時間倍率", ref master.minTimeBonusRate);
+                
                 #region 高さボーナス
+                MyEditorUtils.DrawFloatField("基本アイテム生成時間", ref master.itemBaseTime);
                 MyEditorUtils.DrawIntField("プレイヤー高さボーナス数", ref master.playerHeightBonusCount);
                 
                 EditorGUILayout.LabelField("");

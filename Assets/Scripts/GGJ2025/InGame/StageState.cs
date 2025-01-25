@@ -11,38 +11,39 @@ namespace GGJ2025.InGame
         public readonly StageMaster Master;
         /** プレハブ */
         public readonly List<GameObject> ObstaclePrefabs;
+        /** アイテム */
+        public readonly GameObject ItemPrefab;
         /** 障害物親 */
         public readonly Transform ObstacleParent;
         /** プレイヤー */
         public readonly PlayerView PlayerView;
 
-        /** プレイヤーサイズ速度 */
-        private float _playerSizeSpeed;
-        /** プレイヤーY座標ボーナス */
-        private float _playerHeightSpeedBonus;
-        
-        /** 現在のステージ */
-        private readonly IntReactiveProperty _stageNum = new();
         /** 速度 */
         private readonly FloatReactiveProperty _climbSpeed = new();
         /** 時間 */
         private readonly FloatReactiveProperty _timer = new();
+        /** 時間ボーナス */
+        private readonly FloatReactiveProperty _timeBonus = new();
+        /** 座標ボーナス */
+        private readonly FloatReactiveProperty _playerPosBonus = new();
         /** 高さ */
         private readonly FloatReactiveProperty _height = new();
         
-        public IReadOnlyReactiveProperty<int> StageNumRP => _stageNum;
         public IReadOnlyReactiveProperty<float> ClimbSpeedRP => _climbSpeed;
         public IReadOnlyReactiveProperty<float> TimerRP => _timer;
+        public IReadOnlyReactiveProperty<float> TimeBonusRP => _timeBonus;
+        public IReadOnlyReactiveProperty<float> PlayerPosBonusRP => _playerPosBonus;
         public IReadOnlyReactiveProperty<float> HeightRP => _height;
         
-        public StageState(StageMaster master, List<GameObject> obstaclePrefabs, Transform parent, PlayerView playerView)
+        public StageState(StageMaster master, List<GameObject> obstaclePrefabs, GameObject itemPrefab, Transform parent, PlayerView playerView)
         {
             Master = master;
             ObstaclePrefabs = obstaclePrefabs;
+            ItemPrefab = itemPrefab;
             ObstacleParent = parent;
             PlayerView = playerView;
-            _stageNum.Value = 1;
             _timer.Value = 0;
+            _timeBonus.Value = 1;
             _height.Value = 0;
         }
         
@@ -58,34 +59,27 @@ namespace GGJ2025.InGame
             _height.Value += progress * _climbSpeed.Value;
         }
         
-        /** ステージ移動 */
-        public void NextStage()
+        /** 時間ボーナス更新 */
+        public void UpdateTimeBonus(float bonus)
         {
-            _stageNum.Value += Mathf.Min(Master.MaxLevel, _stageNum.Value + 1);
+            _timeBonus.Value = bonus;
         }
         
         /** プレイヤーサイズボーナス更新 */
         public void UpdatePlayerSizeSpeed(float speed)
         {
-            _playerSizeSpeed = speed;
+            _climbSpeed.Value = speed;
         }
         
         /** プレイヤーY座標ボーナス更新 */
         public void UpdatePlayerHeightSpeedBonus(float bonus)
         {
-            _playerHeightSpeedBonus = bonus;
-        }
-        
-        /** 速度更新 */
-        public void UpdateClimbSpeed()
-        {
-            _climbSpeed.Value = _playerSizeSpeed * _playerHeightSpeedBonus;
+            _playerPosBonus.Value = bonus;
         }
         
         /** ゲームオーバー */
         public void GameOver()
         {
-            _stageNum.Dispose();
             _climbSpeed.Dispose();
             _timer.Dispose();
             _height.Dispose();

@@ -1,0 +1,15 @@
+stage_r.png
+size:1024,128
+filter:Linear,Linear
+pma:true
+car_1
+bounds:2,23,337,102
+car_2
+bounds:2,2,21,19
+car_4
+bounds:542,66,58,59
+car_5
+bounds:341,27,199,98
+kirakira
+bounds:542,50,14,14
+offsets:0,1,14,15

@@ -7,6 +7,7 @@ namespace GGJ2025.InGame
     public class StageUIView : MonoBehaviour
     {
         [SerializeField] private TextWrapper timerText;
+        [SerializeField] private TextWrapper timeBonusText;
         [SerializeField] private TextWrapper heightText;
         [SerializeField] private TextWrapper speedText;
         
@@ -17,6 +18,13 @@ namespace GGJ2025.InGame
             var minutes = Mathf.FloorToInt(timer / 60);
             var seconds = Mathf.FloorToInt(timer % 60);
             timerText.SetText($"{minutes:00}:{seconds:00}");
+        }
+        
+        /** 時間ボーナス表示更新 */
+        private void UpdateTimeBonus(float timeBonus)
+        {
+            // 0.x形式に変換
+            timeBonusText.SetText($"{timeBonus:0.0}");
         }
         
         /** 高さ表示更新 */
@@ -41,6 +49,7 @@ namespace GGJ2025.InGame
             var stageState = stageView.GetState();
             // 購読
             stageState.TimerRP.Subscribe(UpdateTimer);
+            stageState.TimeBonusRP.Subscribe(UpdateTimeBonus);
             stageState.HeightRP.Subscribe(UpdateHeight);
             stageState.ClimbSpeedRP.Subscribe(UpdateSpeed);
             

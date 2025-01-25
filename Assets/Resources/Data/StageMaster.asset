@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1a797647084321bc5cd752825fcd4f, type: 3}
   m_Name: StageMaster
   m_EditorClassIdentifier: 
-  maxLevel: 4
   maxPointSpeed: 100
   minSpeed: 100
   maxSpeed: 1000
-  stageLengthCount: 4
-  stageLength: e8030000b80b0000881300000f270000
+  bonusMaxTime: 60
+  maxTimeBonusRate: 0.5
+  minTimeBonusRate: 0
+  itemBaseTime: 2.5
   playerHeightBonusCount: 4
   playerHeightList:
   - 0
@@ -26,6 +27,6 @@ MonoBehaviour:
   - 1
   playerHeightSpeedRateList:
   - 1
-  - 1.2
   - 1.5
+  - 3
   - -1

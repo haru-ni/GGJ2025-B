@@ -19,13 +19,15 @@ namespace GGJ2025.InGame
         {
             _state.UpdateTimer(progress);
             _state.UpdateHeight(progress);
+            
+            var timeBonus = Mathf.Lerp(_state.Master.MinTimeBonus, _state.Master.MaxTimeBonus, Mathf.Min(1, _state.TimerRP.Value / _state.Master.BonusMaxTime));
+            _state.UpdateTimeBonus(1 - timeBonus);
         }
         
         /** プレイヤーサイズ更新 */
         public void UpdatePlayerPoint(int point)
         {
             _state.UpdatePlayerSizeSpeed(Mathf.Lerp(_state.Master.MinSpeed, _state.Master.MaxSpeed, Mathf.Min(1, point / _state.Master.MaxPointSpeed)));
-            _state.UpdateClimbSpeed();
         }
         
         /** プレイヤーY座標更新 */
@@ -34,60 +36,54 @@ namespace GGJ2025.InGame
             var speedBonusIndex = _state.Master.PlayerHeightList.FindRangeIndexBinarySearch(verticalRate);
             if (speedBonusIndex != -1)
             {
-                _state.UpdatePlayerHeightSpeedBonus(_state.Master.PlayerHeightSpeedBonusList[speedBonusIndex]);
-                _state.UpdateClimbSpeed();
+                var interval = _state.Master.ItemBaseTime / _state.Master.PlayerHeightSpeedBonusList[speedBonusIndex];
+                _state.UpdatePlayerHeightSpeedBonus(interval);
             }
-        }
-        
-        /** 次ステージへ */
-        public void NextStage()
-        {
-            _state.NextStage();
         }
         
         /** 障害物生成開始 */
         public void StartObstacleTimer(StageView stageView)
         {
             const float waitTime = 3.0f;
-            Observable.CreateWithState<float, float>(waitTime, (fireTime, observer) =>
+            _state.TimerRP.RepeatTimerObservable(waitTime).Subscribe(_ =>
             {
-                return _state.TimerRP
-                    .Where(time => time > fireTime)
-                    .Skip(1)
-                    .Subscribe(time =>
-                    {
-                        observer.OnNext(time);
-                        fireTime = time + waitTime;
-                    });
-            }).Subscribe(_ =>
+                var index = CreateObstacle(stageView, true);
+                CreateObstacle(stageView, false, index);
+            });
+        }
+        
+        /** アイテム生成開始 */
+        public IDisposable StartItemTimer(StageView stageView, FloatWrapper waitTime)
+        {
+            return _state.TimerRP.RepeatTimerObservable(waitTime)
+                .Subscribe(_ =>
             {
-                CreateObstacle(stageView, true);
-                CreateObstacle(stageView, false);
+                CreateItem(stageView);
             });
         }
         
         /** 障害物生成 */
-        private void CreateObstacle(StageView stageView, bool isLeft)
+        private int CreateObstacle(StageView stageView, bool isLeft, int preIndex = -1)
         {
             // 障害物生成
             // 0 ~ 2の乱数生成
             var randomIndex = UnityEngine.Random.Range(0, 3);
+            if (preIndex == randomIndex)
+            {
+                randomIndex = (randomIndex + 1) % 3;
+            }
             var obstacle = UnityEngine.Object.Instantiate(_state.ObstaclePrefabs[randomIndex], _state.ObstacleParent);
             var obstacleView = obstacle.GetComponent<ObstacleView>();
             obstacleView.OnStart(_state.PlayerView, stageView, isLeft);
+            return randomIndex;
         }
         
-        /** ステージ経過購読 */
-        public IDisposable SubscribeStageProgress(Action<int> stageProgressAction)
+        /** アイテム生成 */
+        private void CreateItem(StageView stageView)
         {
-            return _state.HeightRP.Subscribe(height =>
-            {
-                var stageLength = _state.Master.StageLength[_state.StageNumRP.Value - 1];
-                if (height >= stageLength)
-                {
-                    stageProgressAction(_state.StageNumRP.Value);
-                }
-            });
+            var item = UnityEngine.Object.Instantiate(_state.ItemPrefab, _state.ObstacleParent);
+            var itemView = item.GetComponent<ItemView>();
+            itemView.OnStart(_state.PlayerView, stageView);
         }
         
         /** ゲームオーバー */

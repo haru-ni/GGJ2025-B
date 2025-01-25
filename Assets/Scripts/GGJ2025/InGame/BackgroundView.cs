@@ -25,11 +25,6 @@ namespace GGJ2025.InGame
                 .Subscribe(_ => _usecase.UpdateBackground(Time.deltaTime))
                 .AddTo(this);
             
-            // ステージ移動
-            stageView.GetState().StageNumRP
-                .Subscribe(num => _usecase.ChangeBackground(stageBackgrounds[num - 1]))
-                .AddTo(this);
-            
             // 速度変更
             stageView.GetState().ClimbSpeedRP
                 .Subscribe(speed => _usecase.ChangeSpeed(speed))
