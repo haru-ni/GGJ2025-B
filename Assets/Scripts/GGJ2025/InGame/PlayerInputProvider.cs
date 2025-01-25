@@ -9,18 +9,18 @@ namespace GGJ2025.InGame
         private CompositeDisposable _buttonDisposables;
         private FloatReactiveProperty _horizontalButtonHold;
         private FloatReactiveProperty _verticalButtonHold;
-        private BoolReactiveProperty _pauseButton;
+        private BoolReactiveProperty _spaceButton;
 
         public IReadOnlyReactiveProperty<float> HorizontalButtonHold => _horizontalButtonHold;
         public IReadOnlyReactiveProperty<float> VerticalButtonHold => _verticalButtonHold;
-        public IReadOnlyReactiveProperty<bool> PauseButton => _pauseButton;
+        public IReadOnlyReactiveProperty<bool> SpaceButton => _spaceButton;
 
         private void Awake()
         {
             _buttonDisposables = new CompositeDisposable();
             _horizontalButtonHold = new FloatReactiveProperty(0).AddTo(this);
             _verticalButtonHold = new FloatReactiveProperty(0).AddTo(this);
-            _pauseButton = new BoolReactiveProperty(false).AddTo(this);
+            _spaceButton = new BoolReactiveProperty(false).AddTo(this);
         }
         
         public void StartInput()
@@ -35,11 +35,11 @@ namespace GGJ2025.InGame
                 .Select(_ => Input.GetAxisRaw("Vertical"))
                 .Subscribe(input => _verticalButtonHold.SetValueAndForceNotify(input)).AddTo(_buttonDisposables);
             
-            // ポーズキー購読
+            // スペースキー購読
             this.UpdateAsObservable().
-                Select(_ => Input.GetKeyDown(KeyCode.Escape))
+                Select(_ => Input.GetKeyDown(KeyCode.Space))
                 .SkipWhile(input => input)
-                .Subscribe(input => _pauseButton.Value = input).AddTo(_buttonDisposables);
+                .Subscribe(input => _spaceButton.Value = input).AddTo(_buttonDisposables);
         }
         
         /** 操作中断 */
@@ -53,7 +53,7 @@ namespace GGJ2025.InGame
         {
             _horizontalButtonHold.Value = 0;
             _verticalButtonHold.Value = 0;
-            _pauseButton.Value = false;
+            _spaceButton.Value = false;
         }
     }
 }

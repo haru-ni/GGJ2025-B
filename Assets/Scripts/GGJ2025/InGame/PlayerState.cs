@@ -6,8 +6,8 @@ namespace GGJ2025.InGame
 {
     public class PlayerState
     {
-        /** サイズ */
-        private readonly IntReactiveProperty _size = new();
+        /** グレード */
+        private readonly IntReactiveProperty _grade = new();
         /** Y軸 */
         private readonly FloatReactiveProperty _verticalRate = new();
         
@@ -20,23 +20,28 @@ namespace GGJ2025.InGame
         /** マスター */
         public PlayerMaster Master { get; private set; }
 
-        public IReadOnlyReactiveProperty<int> SizeRP => _size;
+        public IReadOnlyReactiveProperty<int> GradeRP => _grade;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
-        
+
         /** 速度下限 */
-        public readonly float MinSpeed = 10f;
+        public const float MinSpeed = 10f;
 
         public PlayerState(PlayerMaster master, Transform transform)
         {
             Master = master;
             Transform = transform;
-            Size = new Vector2(80, 80);
+        }
+        
+        /** グレード変更 */
+        public void ChangeGrade(int grade)
+        {
+            _grade.Value = grade;
         }
         
         /** サイズ変更 */
-        public void ChangeSize(int size)
+        public void ChangeSize(Vector2 size)
         {
-            _size.Value = size;
+            Size = size;
         }
         
         /** 左右スピード */
@@ -55,7 +60,7 @@ namespace GGJ2025.InGame
         public void Move(Vector2 nextPos)
         {
             Transform.localPosition = nextPos;
-            _verticalRate.Value = nextPos.y;
+            _verticalRate.Value = (nextPos.y + (float)GameConst.StageHeight / 2) / GameConst.StageHeight;
         }
         
     }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1a797647084321bc5cd752825fcd4f, type: 3}
+  m_Name: StageMaster
+  m_EditorClassIdentifier: 
+  maxLevel: 0
+  sizeBonusCount: 5
+  sizeSpeedList: 64000000c80000002c01000090010000ffffffff
+  playerHeightBonusCount: 4
+  playerHeightList:
+  - 0
+  - 0.5
+  - 0.8
+  - 1
+  playerHeightSpeedRateList:
+  - 1
+  - 1.2
+  - 1.5
+  - -1

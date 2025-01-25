@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 
 namespace GGJ2025.InGame
 {
@@ -23,13 +24,23 @@ namespace GGJ2025.InGame
         /** プレイヤーサイズ更新 */
         public void UpdatePlayerSize(int size)
         {
-            _state.UpdatePlayerSize(size);
+            if (size < 1 || size > _state.Master.SizeSpeedList.Count)
+            {
+                return;
+            }
+            _state.UpdatePlayerSizeSpeed(_state.Master.SizeSpeedList[size - 1]);
+            _state.UpdateClimbSpeed();
         }
         
         /** プレイヤーY座標更新 */
         public void UpdatePlayerVerticalRate(float verticalRate)
         {
-            _state.UpdatePlayerVerticalRate(verticalRate);
+            var speedBonusIndex = _state.Master.PlayerHeightList.FindRangeIndexBinarySearch(verticalRate);
+            if (speedBonusIndex != -1)
+            {
+                _state.UpdatePlayerHeightSpeedBonus(_state.Master.PlayerHeightSpeedBonusList[speedBonusIndex]);
+                _state.UpdateClimbSpeed();
+            }
         }
         
         /** 次ステージへ */

@@ -23,12 +23,17 @@ namespace GGJ2025.InGame
         
         public void OnStart()
         {
+            _usecase.Init();
+            
             _inputProvider.HorizontalButtonHold
                 .Where(x => x != 0)
                 .Subscribe(_usecase.MoveHorizontal).AddTo(this);
             _inputProvider.VerticalButtonHold
                 .Where(x => x != 0)
                 .Subscribe(_usecase.MoveVertical).AddTo(this);
+            _inputProvider.SpaceButton
+                .Where(x => x)
+                .Subscribe(_ => _usecase.AddGrade(1)).AddTo(this);
             this.UpdateAsObservable()
                 .Subscribe(_ => _usecase.UpdateMove(Time.deltaTime)).AddTo(this);
             StartInput();

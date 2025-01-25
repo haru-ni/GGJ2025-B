@@ -1,21 +1,23 @@
 using System.Collections.Generic;
+using GGJ2025.Master;
 using UniRx;
 
 namespace GGJ2025.InGame
 {
     public class StageState
     {
-
+        /** マスター */
+        public readonly StageMaster Master;
         /** ステージの長さ */
         public readonly List<int> StageLength = new() {10, 20, 30, 40, 9999};
         
         /** 現在のステージ */
         public int StageNum { get; private set; }
 
-        /** プレイヤーサイズ */
-        private int _playerSize = 1;
-        /** プレイヤーY座標 */
-        private float _playerVerticalRate = 0;
+        /** プレイヤーサイズ速度 */
+        private int _playerSizeSpeed;
+        /** プレイヤーY座標ボーナス */
+        private float _playerHeightSpeedBonus;
         
         /** 速度 */
         private readonly FloatReactiveProperty _climbSpeed = new();
@@ -28,17 +30,12 @@ namespace GGJ2025.InGame
         public IReadOnlyReactiveProperty<float> TimerRP => _timer;
         public IReadOnlyReactiveProperty<float> HeightRP => _height;
         
-        public StageState()
+        public StageState(StageMaster master)
         {
+            Master = master;
             StageNum = 1;
             _timer.Value = 0;
             _height.Value = 0;
-        }
-        
-        /** 速度更新 */
-        private void UpdateClimbSpeed()
-        {
-            _climbSpeed.Value = _playerSize * _playerVerticalRate;
         }
         
         /** 時間更新 */
@@ -59,18 +56,22 @@ namespace GGJ2025.InGame
             StageNum += 1;
         }
         
-        /** プレイヤーサイズ更新 */
-        public void UpdatePlayerSize(int size)
+        /** プレイヤーサイズボーナス更新 */
+        public void UpdatePlayerSizeSpeed(int speed)
         {
-            _playerSize = size;
-            UpdateClimbSpeed();
+            _playerSizeSpeed = speed;
         }
         
-        /** プレイヤーY座標更新 */
-        public void UpdatePlayerVerticalRate(float rate)
+        /** プレイヤーY座標ボーナス更新 */
+        public void UpdatePlayerHeightSpeedBonus(float bonus)
         {
-            _playerVerticalRate = rate;
-            UpdateClimbSpeed();
+            _playerHeightSpeedBonus = bonus;
+        }
+        
+        /** 速度更新 */
+        public void UpdateClimbSpeed()
+        {
+            _climbSpeed.Value = _playerSizeSpeed * _playerHeightSpeedBonus;
         }
         
     }

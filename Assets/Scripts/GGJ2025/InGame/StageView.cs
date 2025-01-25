@@ -1,3 +1,4 @@
+using GGJ2025.Master;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -6,13 +7,14 @@ namespace GGJ2025.InGame
 {
     public class StageView: MonoBehaviour
     {
+        [SerializeField] private StageMaster master;
         
         private StageUsecase _usecase;
         private StageState _state;
         
         private void Awake()
         {
-            _state = new StageState();
+            _state = new StageState(master);
             _usecase = new StageUsecase(_state);
         }
 
@@ -30,7 +32,7 @@ namespace GGJ2025.InGame
                 _usecase.TimeProgress(Time.deltaTime);
             });
             
-            playerView.GetState().SizeRP.Subscribe(_usecase.UpdatePlayerSize);
+            playerView.GetState().GradeRP.Subscribe(_usecase.UpdatePlayerSize);
             playerView.GetState().VerticalRateRP.Subscribe(_usecase.UpdatePlayerVerticalRate);
         }
         

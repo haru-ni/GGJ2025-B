@@ -9,14 +9,6 @@ namespace GGJ2025.InGame
         [SerializeField] private TextWrapper timerText;
         [SerializeField] private TextWrapper heightText;
         [SerializeField] private TextWrapper speedText;
-
-        private void Awake()
-        {
-            // 初期表示
-            UpdateTimer(0);
-            UpdateHeight(0);
-            UpdateSpeed(0);
-        }
         
         /** 時間表示更新 */
         private void UpdateTimer(float timer)
@@ -42,6 +34,10 @@ namespace GGJ2025.InGame
         /** ゲームスタート */
         public void StartGame(StageView stageView)
         {
+            UpdateTimer(0);
+            UpdateHeight(0);
+            UpdateSpeed(0);
+            
             var stageState = stageView.GetState();
             // 購読
             stageState.TimerRP.Subscribe(UpdateTimer);

@@ -8,8 +8,8 @@ namespace GGJ2025
         public const int ScreenHeight = 720;
         
         /** ステージサイズ */
-        public const float StageWidth = 720;
-        public const float StageHeight = 720;
+        public const int StageWidth = 720;
+        public const int StageHeight = 720;
         
     }
 }

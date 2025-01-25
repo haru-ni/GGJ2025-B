@@ -12,6 +12,26 @@ namespace GGJ2025.InGame
             _state = state;
         }
         
+        /** 初期化 */
+        public void Init()
+        {
+            var initGrade = 1;
+            _state.ChangeGrade(initGrade);
+            _state.ChangeSize(_state.Master.SizeList[initGrade - 1]);
+        }
+        
+        /** グレード変更 */
+        public void AddGrade(int grade)
+        {
+            var nextGrade = _state.GradeRP.Value + grade;
+            if (nextGrade > _state.Master.MaxGrade)
+            {
+                return;
+            }
+            _state.ChangeGrade(nextGrade);
+            _state.ChangeSize(_state.Master.SizeList[nextGrade - 1]);
+        }
+        
         /** 左右入力 */
         public void MoveHorizontal(float x)
         {
@@ -30,10 +50,10 @@ namespace GGJ2025.InGame
         public void UpdateMove(float deltaTime)
         {
             // 速度減衰
-            var nextSpeedX = Mathf.Abs(_state.Speed.x) < _state.MinSpeed
+            var nextSpeedX = Mathf.Abs(_state.Speed.x) < PlayerState.MinSpeed
                 ? 0
                 : Mathf.Lerp(_state.Speed.x, 0, _state.Master.DampingRate);
-            var nextSpeedY = Mathf.Abs(_state.Speed.y) < _state.MinSpeed
+            var nextSpeedY = Mathf.Abs(_state.Speed.y) < PlayerState.MinSpeed
                 ? 0
                 : Mathf.Lerp(_state.Speed.y, 0, _state.Master.DampingRate);
             _state.SetHorizontalSpeed(nextSpeedX);
