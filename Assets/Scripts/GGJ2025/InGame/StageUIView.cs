@@ -24,7 +24,7 @@ namespace GGJ2025.InGame
         private void UpdateTimeBonus(float timeBonus)
         {
             // 0.x形式に変換
-            timeBonusText.SetText($"{timeBonus:0.0}");
+            timeBonusText.SetText($"倍率 {timeBonus:0.0}");
         }
         
         /** 高さ表示更新 */

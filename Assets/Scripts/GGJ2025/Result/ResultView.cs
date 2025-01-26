@@ -1,4 +1,5 @@
 using System;
+using GGJ2025.Master;
 using GGJ2025.UI;
 using UniRx;
 using UniRx.Triggers;
@@ -17,7 +18,9 @@ namespace GGJ2025.Result
         [SerializeField] private TextWrapper timeText;
         [SerializeField] private TextWrapper timeRateText;
         [SerializeField] private TextWrapper scoreText;
-        /** リザルト表示 */
+        [SerializeField] private TextWrapper sentenceText;
+        /** マスター */
+        [SerializeField] private ResultMaster resultMaster;
         
         private readonly Subject<Unit> _retrySubject = new();
         public IObservable<Unit> RetryObservable => _retrySubject;
@@ -36,7 +39,6 @@ namespace GGJ2025.Result
         {
             gameClearGroup.SetActive(true);
 
-            Debug.Log(ScoreManager.SizeRate);
             bubbleTransform.localScale = new Vector2(ScoreManager.SizeRate, ScoreManager.SizeRate);
             
             pointText.SetText(ScoreManager.Point);
@@ -45,6 +47,9 @@ namespace GGJ2025.Result
             var timerBonus = ScoreManager.TimerBonus.ToString("F1");
             timeRateText.SetText(timerBonus);
             scoreText.SetText((int)Math.Floor(ScoreManager.Point * ScoreManager.TimerBonus));
+            
+            var index = resultMaster.SentenceConditions.FindRangeIndexBinarySearch(ScoreManager.Point);
+            sentenceText.SetText(resultMaster.Sentences[index]);
         }
         
         public void OnStart()
