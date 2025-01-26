@@ -23,7 +23,7 @@ namespace GGJ2025.InGame
             _state.UpdateHeight(progress);
             
             var timeBonus = Mathf.Lerp(_state.Master.MinTimeBonus, _state.Master.MaxTimeBonus, Mathf.Min(1, _state.TimerRP.Value / _state.Master.BonusMaxTime));
-            _state.UpdateTimeBonus(1 - timeBonus);
+            _state.UpdateTimeBonus(_state.Master.MaxTimeBonus - timeBonus);
         }
         
         /** プレイヤーサイズ更新 */

@@ -35,6 +35,10 @@ namespace GGJ2025.InGame
             playerView.GetState().IsGameOverRP.
                 Where(x => x).
                 Subscribe(_ => _usecase.OnGameOver()).AddTo(this); 
+            
+            playerView.GetState().IsGameClearRP.
+                Where(x => x).
+                Subscribe(_ => _usecase.OnGameOver()).AddTo(this);
         }
     }
 }

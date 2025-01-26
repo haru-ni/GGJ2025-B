@@ -80,5 +80,11 @@ namespace GGJ2025.InGame
         {
             return _state;
         }
+
+        private void OnDestroy()
+        {
+            _state.OnDestroy();
+        }
+
     }
 }

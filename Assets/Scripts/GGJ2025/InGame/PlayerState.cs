@@ -77,13 +77,12 @@ namespace GGJ2025.InGame
         {
             _point.Dispose();
             _verticalRate.Dispose();
-            _isGameClear.Dispose();
         }
         
         /** ゲームクリア */
         public void GameClear()
         {
-            _isGameClear.Value = true;
+            _isGameClear.SetValueAndForceNotify(true);
         }
         
         /** 移動 */
@@ -100,8 +99,13 @@ namespace GGJ2025.InGame
             _isGameOver.Dispose();
             _point.Dispose();
             _verticalRate.Dispose();
-            _isGameClear.Dispose();
             Object.Destroy(Transform.gameObject);
+        }
+        
+        /** ゲームオーバー */
+        public void OnDestroy()
+        {
+            _isGameClear.Dispose();
         }
         
     }

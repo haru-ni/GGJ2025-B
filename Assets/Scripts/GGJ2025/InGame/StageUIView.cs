@@ -43,15 +43,15 @@ namespace GGJ2025.InGame
         public void StartGame(StageView stageView)
         {
             UpdateTimer(0);
-            UpdateHeight(0);
-            UpdateSpeed(0);
+            // UpdateHeight(0);
+            // UpdateSpeed(0);
             
             var stageState = stageView.GetState();
             // 購読
             stageState.TimerRP.Subscribe(UpdateTimer);
             stageState.TimeBonusRP.Subscribe(UpdateTimeBonus);
-            stageState.HeightRP.Subscribe(UpdateHeight);
-            stageState.ClimbSpeedRP.Subscribe(UpdateSpeed);
+            // stageState.HeightRP.Subscribe(UpdateHeight);
+            // stageState.ClimbSpeedRP.Subscribe(UpdateSpeed);
             
         }
     }
