@@ -46,17 +46,16 @@ namespace GGJ2025.InGame
                 _usecase.TimeProgress(Time.deltaTime);
             });
             
-            this.UpdateAsObservable()
-                .Select(_ => Input.GetKeyDown(KeyCode.Space))
-                .Where(x => x)
-                .FirstOrDefault()
-                .Subscribe(_ => _usecase.GameClear(playerView)).AddTo(this);
-            
             playerView.GetState().PointRP.Subscribe(_usecase.UpdatePlayerPoint);
             playerView.GetState().VerticalRateRP.Subscribe(_usecase.UpdatePlayerVerticalRate);
             playerView.GetState().IsGameOverRP
                 .Where(x => x)
+                .FirstOrDefault()   
                 .Subscribe(_usecase.GameOver).AddTo(this);
+            playerView.GetState().IsGameClearRP
+                .Where(x => x)
+                .FirstOrDefault()
+                .Subscribe(_ => _usecase.GameClear(playerView)).AddTo(this);
             
             backgroundView.OnStart(this);
             

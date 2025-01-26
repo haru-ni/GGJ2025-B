@@ -69,6 +69,12 @@ namespace GGJ2025.InGame
             
         }
         
+        /** ゲームクリア */
+        public void GameClear()
+        {
+            _state.GameClear();
+        }
+        
         /** ゲームオーバー */
         public void GameOver()
         {

@@ -90,8 +90,18 @@ namespace GGJ2025.InGame
         /** ゲームクリア */
         public void GameClear(PlayerView playerView)
         {
+            if (playerView.GetState().IsGameOverRP.Value)
+            {
+                return;
+            }
+            
+            var point = playerView.GetState().PointRP.Value;
+            var sizeRate = playerView.GetState().SizeRate;
+            // MM:SS
+            var time = $"{(int)_state.TimerRP.Value / 60:D2}:{(int)_state.TimerRP.Value % 60:D2}";
+            var timerBonus = _state.TimeBonusRP.Value;
             _state.GameOver();
-            ScoreManager.GameClear(playerView.GetState().PointRP.Value, _state.TimeBonusRP.Value);
+            ScoreManager.GameClear(point, sizeRate, time, timerBonus);
             playerView.StopInput();
             
             Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ =>
@@ -103,6 +113,7 @@ namespace GGJ2025.InGame
         /** ゲームオーバー */
         public void GameOver(bool isGameOver)
         {
+            Debug.Log("GameOver");
             _state.GameOver();
             ScoreManager.GameOver();
             

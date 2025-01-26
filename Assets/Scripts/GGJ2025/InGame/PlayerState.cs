@@ -12,11 +12,14 @@ namespace GGJ2025.InGame
         private readonly FloatReactiveProperty _verticalRate = new();
         /** ゲームオーバー */
         private readonly BoolReactiveProperty _isGameOver = new();
+        /** ゲームクリア */
+        private readonly BoolReactiveProperty _isGameClear = new();
         /** Spriteサイズ */
-        private readonly RectTransform _spriteTransform;
+        public readonly RectTransform SpriteTransform;
         
         /** サイズ */
         public float Size { get; private set; }
+        public float SizeRate { get; private set; }
         /** 速度 */
         public Vector2 Speed { get; private set; }
         /** 位置 */
@@ -27,6 +30,7 @@ namespace GGJ2025.InGame
         public IReadOnlyReactiveProperty<int> PointRP => _point;
         public IReadOnlyReactiveProperty<float> VerticalRateRP => _verticalRate;
         public IReadOnlyReactiveProperty<bool> IsGameOverRP => _isGameOver;
+        public IReadOnlyReactiveProperty<bool> IsGameClearRP => _isGameClear;
 
         /** 速度下限 */
         public const float MinSpeed = 10f;
@@ -35,7 +39,7 @@ namespace GGJ2025.InGame
         {
             Master = master;
             Transform = transform;
-            _spriteTransform = spriteTransform;
+            SpriteTransform = spriteTransform;
             
             transform.sizeDelta = new Vector2(master.MaxSize, master.MaxSize);
         }
@@ -52,7 +56,8 @@ namespace GGJ2025.InGame
             Size = Mathf.Lerp(Master.MinSize / 2, Master.MaxSize / 2, sizeRate);
             var scale = Master.MinSize / Master.MaxSize + sizeRate * (1 - Master.MinSize / Master.MaxSize);
             // Debug.Log($"Size : {Size} / Scale : {scale}");
-            _spriteTransform.localScale = new Vector2(scale, scale);
+            SpriteTransform.localScale = new Vector2(scale, scale);
+            SizeRate = scale;
         }
         
         /** 左右スピード */
@@ -70,10 +75,15 @@ namespace GGJ2025.InGame
         /** 入力停止 */
         public void StopInput()
         {
-            _isGameOver.Value = true;
-            _isGameOver.Dispose();
             _point.Dispose();
             _verticalRate.Dispose();
+            _isGameClear.Dispose();
+        }
+        
+        /** ゲームクリア */
+        public void GameClear()
+        {
+            _isGameClear.Value = true;
         }
         
         /** 移動 */
@@ -90,6 +100,7 @@ namespace GGJ2025.InGame
             _isGameOver.Dispose();
             _point.Dispose();
             _verticalRate.Dispose();
+            _isGameClear.Dispose();
             Object.Destroy(Transform.gameObject);
         }
         
