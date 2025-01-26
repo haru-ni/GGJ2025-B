@@ -1,4 +1,5 @@
 using Common;
+using GGJ2025.Sounds;
 using UnityEngine;
 
 namespace GGJ2025
@@ -27,6 +28,15 @@ namespace GGJ2025
         private static void InitializeGame()
         {
             Screen.SetResolution(GameConst.ScreenWidth, GameConst.ScreenHeight, FullScreenMode.Windowed);
+            
+            // サウンド初期化
+            SoundManager.Initialize();
+            
+            // サウンド読み込み
+            SoundManager.BGM.SetAudioClip((int)BGMs.Main, null, Resources.Load<AudioClip>("Sound/BgmMain"));
+            // SoundManager.SE.Set((int)SEs.GameClear, Resources.Load<AudioClip>("Sound/SeGameClear"));
+            // SoundManager.SE.Set((int)SEs.GameOver, Resources.Load<AudioClip>("Sound/SeGameOver"));
+            
         }
     }
 }

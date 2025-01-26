@@ -1,4 +1,5 @@
 using System;
+using GGJ2025.Sounds;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -104,6 +105,8 @@ namespace GGJ2025.InGame
             ScoreManager.GameClear(point, sizeRate, time, timerBonus);
             playerView.StopInput();
             
+            SoundManager.SE.Play(SEs.GameClear);
+            
             Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ =>
             {
                 SceneManager.LoadScene("ResultScene");
@@ -116,6 +119,11 @@ namespace GGJ2025.InGame
             Debug.Log("GameOver");
             _state.GameOver();
             ScoreManager.GameOver();
+            
+            if (isGameOver)
+            {
+                SoundManager.SE.Play(SEs.GameOver);
+            }
             
             Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(_ =>
             {

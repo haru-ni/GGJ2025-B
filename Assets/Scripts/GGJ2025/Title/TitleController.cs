@@ -1,3 +1,4 @@
+using GGJ2025.Sounds;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,8 @@ namespace GGJ2025.Title
                 // シーン遷移
                 SceneManager.LoadScene("MainScene");
             });
+            
+            SoundManager.BGM.Play((int)BGMs.Main).Forget();
         }
         
     }
