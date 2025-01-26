@@ -96,6 +96,9 @@ namespace GGJ2025.InGame
                 return;
             }
             
+            var clearIcon = _state.ClearIcon;
+            clearIcon.SetActive(true);
+            
             var point = playerView.GetState().PointRP.Value;
             var sizeRate = playerView.GetState().SizeRate;
             // MM:SS
@@ -111,12 +114,19 @@ namespace GGJ2025.InGame
             {
                 SceneManager.LoadScene("ResultScene");
             });
+            
+            SoundManager.BGM.Play(BGMs.Stop, 0.5f);
         }
         
         /** ゲームオーバー */
         public void GameOver(bool isGameOver)
         {
             Debug.Log("GameOver");
+            
+            var gameOverIcon = _state.GameOverIcon;
+            gameOverIcon.SetActive(true);
+            gameOverIcon.transform.position = _state.PlayerView.transform.position; 
+            
             _state.GameOver();
             ScoreManager.GameOver();
             
@@ -129,6 +139,8 @@ namespace GGJ2025.InGame
             {
                 SceneManager.LoadScene("ResultScene");
             });
+            
+            SoundManager.BGM.Play(BGMs.Stop, 0.5f);
         }
         
     }

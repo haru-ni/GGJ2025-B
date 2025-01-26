@@ -34,8 +34,8 @@ namespace GGJ2025
             
             // サウンド読み込み
             SoundManager.BGM.SetAudioClip((int)BGMs.Main, null, Resources.Load<AudioClip>("Sound/BgmMain"));
-            // SoundManager.SE.Set((int)SEs.GameClear, Resources.Load<AudioClip>("Sound/SeGameClear"));
-            // SoundManager.SE.Set((int)SEs.GameOver, Resources.Load<AudioClip>("Sound/SeGameOver"));
+            SoundManager.SE.Set((int)SEs.GameClear, Resources.Load<AudioClip>("Sound/SeGameClear"));
+            SoundManager.SE.Set((int)SEs.GameOver, Resources.Load<AudioClip>("Sound/SeGameOver"));
             
         }
     }

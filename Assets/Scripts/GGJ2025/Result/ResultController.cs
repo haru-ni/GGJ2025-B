@@ -14,7 +14,7 @@ namespace GGJ2025.Result
             resultView.RetryObservable.Subscribe(_ =>
             {
                 // シーン遷移
-                SceneManager.LoadScene("MainScene");
+                SceneManager.LoadScene("TitleScene");
             });
         }
         

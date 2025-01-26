@@ -17,6 +17,10 @@ namespace GGJ2025.InGame
         public readonly Transform ObstacleParent;
         /** プレイヤー */
         public readonly PlayerView PlayerView;
+        /** クリアアイコン */
+        public readonly GameObject ClearIcon;
+        /** ゲームオーバーアイコン */
+        public readonly GameObject GameOverIcon;
 
         /** 速度 */
         private readonly FloatReactiveProperty _climbSpeed = new();
@@ -35,7 +39,7 @@ namespace GGJ2025.InGame
         public IReadOnlyReactiveProperty<float> PlayerPosBonusRP => _playerPosBonus;
         public IReadOnlyReactiveProperty<float> HeightRP => _height;
         
-        public StageState(StageMaster master, List<GameObject> obstaclePrefabs, GameObject itemPrefab, Transform parent, PlayerView playerView)
+        public StageState(StageMaster master, List<GameObject> obstaclePrefabs, GameObject itemPrefab, Transform parent, PlayerView playerView, GameObject clearIcon, GameObject gameOverIcon)
         {
             Master = master;
             ObstaclePrefabs = obstaclePrefabs;
@@ -45,6 +49,10 @@ namespace GGJ2025.InGame
             _timer.Value = 0;
             _timeBonus.Value = 1;
             _height.Value = 0;
+            ClearIcon = clearIcon;
+            clearIcon.SetActive(false);
+            GameOverIcon = gameOverIcon;
+            gameOverIcon.SetActive(false);
         }
         
         /** 時間更新 */

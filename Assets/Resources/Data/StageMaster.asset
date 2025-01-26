@@ -16,9 +16,9 @@ MonoBehaviour:
   minSpeed: 100
   maxSpeed: 1000
   bonusMaxTime: 60
-  maxTimeBonusRate: 0.5
+  maxTimeBonusRate: 1000
   minTimeBonusRate: 0
-  itemBaseTime: 2.5
+  itemBaseTime: 0.6
   playerHeightBonusCount: 4
   playerHeightList:
   - 0

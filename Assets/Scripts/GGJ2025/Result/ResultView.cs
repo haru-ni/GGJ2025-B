@@ -1,5 +1,6 @@
 using System;
 using GGJ2025.Master;
+using GGJ2025.Sounds;
 using GGJ2025.UI;
 using UniRx;
 using UniRx.Triggers;
@@ -44,7 +45,7 @@ namespace GGJ2025.Result
             pointText.SetText(ScoreManager.Point);
             timeText.SetText(ScoreManager.Time);
             // 0.x表示
-            var timerBonus = ScoreManager.TimerBonus.ToString("F1");
+            var timerBonus = ScoreManager.TimerBonus.ToString("F1") + "倍";
             timeRateText.SetText(timerBonus);
             scoreText.SetText((int)Math.Floor(ScoreManager.Point * ScoreManager.TimerBonus));
             

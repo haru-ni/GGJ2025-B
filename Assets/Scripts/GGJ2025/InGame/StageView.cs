@@ -16,6 +16,9 @@ namespace GGJ2025.InGame
         [SerializeField] private List<GameObject> obstaclePrefabs;
         [SerializeField] private GameObject itemPrefab;
         
+        [SerializeField] private GameObject clearIcon;
+        [SerializeField] private GameObject gameOverIcon;
+        
         private StageUsecase _usecase;
         private StageState _state;
 
@@ -23,7 +26,7 @@ namespace GGJ2025.InGame
         
         private void Awake()
         {
-            _state = new StageState(master, obstaclePrefabs, itemPrefab, obstacleParent, playerView);
+            _state = new StageState(master, obstaclePrefabs, itemPrefab, obstacleParent, playerView, clearIcon, gameOverIcon);
             _usecase = new StageUsecase(_state);
         }
         
